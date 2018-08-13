@@ -49,8 +49,8 @@ main( )
 ```
 
 ```bash
-$ gcc -Wall main_1.c -o printf_1
-$ nm printf_1
+$ gcc -Wall main_1.c -o printf_app
+$ nm printf_app
 0000000000601038 B __bss_start
 0000000000601038 b completed.7594
 0000000000601028 D __data_start
@@ -91,8 +91,8 @@ $ nm printf_1
 ```
 
 ```bash
-$ strace ./printf_1
-execve("./printf_1", ["./printf_1"], [/* 23 vars */]) = 0
+$ strace ./printf_app
+execve("./printf_app", ["./printf_app"], [/* 23 vars */]) = 0
 brk(NULL)                               = 0x1ef5000
 access("/etc/ld.so.nohwcap", F_OK)      = -1 ENOENT (No such file or directory)
 access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
@@ -129,4 +129,39 @@ The results of *nm* or *strace* command look so horrible. But please do not be d
 
 Firstly, the following diagram describes a architecture of **Linux** application:
 
+![Image of Linux application architecture](https://github.com/vitlachbach/vitlachbach.github.io/blob/master/images/logging_mechanism_part_1/app_layer.png)
 
+Fig 01. Linux application architecture
+It shows that each application will be create by its logic process and by linking (dynamic/static) of C runtime libraries. Each C runtime library will call the Operating System API by a system-call. Each line of **strace** command is a runtime system call from the *printf_app* application. Ignore some other system call of *printf_app* application to focus about our topic, We've just see following system call:
+```bash
+write(1, "Hello world\n", 12Hello world
+```
+This system call means that finally, the *printf_app* will call to device driver by *write* with file descriptor is 1 (stdout).
+
+For more detail, if we use *gdb* to dig more (using *stepi* command) about the printf call, we will find this calling sequence of the *printf_app*:
+```bash
+$ gdb ./printf_app
+(gdb) start
+(gdb) stepi
+... many stepi go ...
+0x00000000004009b7 in main ()
+0x000000000040fa90 in puts ()
+0x0000000000423820 in strlen ()
+...
+0x000000000041dbe0 in malloc ()
+...
+0x0000000000414fd0 in _IO_doallocbuf ()
+...
+0x0000000000462c80 in _IO_file_doallocate ()
+...
+0x00000000004133a0 in _IO_new_do_write ()
+...
+0x000000000043f3b0 in write ()
+```
+
+OOps, there is a memory allocate call in the sequence! Why?
+It's seems that all for today. The sunken of the icebergs is still a alot of consider points: 
+    * Why does it need memory allocation? 
+    * The program need a buffer, doesn't it? 
+    * What is the mechanism of the memory buffer in printf?
+    * How about the print in kernel mode?
