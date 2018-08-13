@@ -1,4 +1,5 @@
-# Another approach to a legendary program
+# Linux logging system. Part I: Another approach to a legendary program.
+Author: HieuTC3 with 3 mins to read.
 ## Prelude
 Most programmers know the **Hello World** program (**HWp**) used to introduce to a novice about a computer programming language. From *Programming in C: A Tutorial* of Brian Kernighan, the instance of the **HWp** is like following: 
 ```C
