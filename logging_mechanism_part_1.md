@@ -31,15 +31,15 @@ If we *google* with *"printf man"* phrase, maybe you can find that *printf* func
 ```C
 int printf(const char *format, ...);
 ```
-and this function will produce output to **stdout** according to a format. Please goto this url https://linux.die.net/man/3/printf for more detail description.
+and this function will produce output to **stdout** according to the *format*. Please goto this url https://linux.die.net/man/3/printf for more detail description.
 ## How to use printf?
-Let's see some actions: include stdio.h library, format the output, etc ... And I know, for sure, that it would be so boring if I described these action in detail :) .
+Let's see some actions: include stdio.h library, format the output, etc ... But I know, for sure, that it would be so boring if I described these action in detail :) .
 
 ## How printf work?
-It will be *die-hard* method if we trace the complexity source code of Linux system to understand what exactly *printf* function do at this time. I choose a lazy-effective one: use application debug tool.
-Firstly, we create the main_1.c file and edit the **HWp**.
+It will be *die-hard* method if we trace the complexity source code of Linux system to understand what exactly *printf* function do at this time. I choose a lazy-effective one: use application debugging tool.
+Firstly, we create the main.c file and edit the **HWp**.
 ```C
-//main_1.c
+//main.c
 #include <stdio.h>
 
 main( )
@@ -49,7 +49,7 @@ main( )
 ```
 
 ```bash
-$ gcc -Wall main_1.c -o printf_app
+$ gcc -Wall main.c -o printf_app
 $ nm printf_app
 0000000000601038 B __bss_start
 0000000000601038 b completed.7594
@@ -136,9 +136,9 @@ It shows that each application will be create by its logic process and by linkin
 ```bash
 write(1, "Hello world\n", 12Hello world
 ```
-This system call means that finally, the *printf_app* will call to device driver by *write* with file descriptor is 1 (stdout).
+This system call means that finally, the *printf_app* will call to device driver by *write* with file descriptor is, the **stdout** identify, 1.
 
-For more detail, if we use *gdb* to see more (using *stepi* command) about the printf call, we will find this calling sequence of the *printf_app*:
+For detail, if we use *gdb* to see more (using *stepi* command) about the printf call, we will find this calling sequence of the *printf_app*:
 ```bash
 $ gdb ./printf_app
 (gdb) start
@@ -159,12 +159,8 @@ $ gdb ./printf_app
 0x000000000043f3b0 in write ()
 ```
 
-OOps, there is an apperance of memory allocation in the program sequence! What is happened actually ..? However it's seems that all for today.
- The sunken of the icebergs is still a alot of consider points:
-    * Why does it need memory allocation?
-    * The program need a buffer, doesn't it?
-    * What is the mechanism of the memory buffer in printf?
-    * How about the print in kernel mode?
+OOps, there is an apperance of memory allocation in the program sequence! What is happened actually ..? 
+However it seems that's all for today and we will continue the topic with next post.
 ## Pre-prologue
 No doubt that **HWp** is one of the most famous one. Software engineers can easy understand the simple function of **HWp**. We also admit that **HWp**, such its basic syntax, be the beginning lesson of a C/C++ programmers. But if we want to be a professional one we should dig more the iceberg to see its sunken where there is a lot of consider points in advanced:
     * Why does it need memory allocation?
