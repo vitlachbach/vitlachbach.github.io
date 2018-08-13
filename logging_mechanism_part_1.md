@@ -1,4 +1,4 @@
-# Another approach about a legendary program
+# Another approach to a legendary program
 ## Prelude
 Most programmers know the **Hello World** program (**HWp**) used to introduce to a novice about a computer programming language. From *Programming in C: A Tutorial* of Brian Kernighan, the instance of the **HWp** is like following: 
 ```C
@@ -138,7 +138,7 @@ write(1, "Hello world\n", 12Hello world
 ```
 This system call means that finally, the *printf_app* will call to device driver by *write* with file descriptor is 1 (stdout).
 
-For more detail, if we use *gdb* to dig more (using *stepi* command) about the printf call, we will find this calling sequence of the *printf_app*:
+For more detail, if we use *gdb* to see more (using *stepi* command) about the printf call, we will find this calling sequence of the *printf_app*:
 ```bash
 $ gdb ./printf_app
 (gdb) start
@@ -159,10 +159,17 @@ $ gdb ./printf_app
 0x000000000043f3b0 in write ()
 ```
 
-OOps, there is a memory allocate call in the sequence! Why?
-It's seems that all for today. The sunken of the icebergs is still a alot of consider points:
+OOps, there is an apperance of memory allocation in the program sequence! What is happened actually ..? However it's seems that all for today.
+ The sunken of the icebergs is still a alot of consider points:
     * Why does it need memory allocation?
     * The program need a buffer, doesn't it?
     * What is the mechanism of the memory buffer in printf?
     * How about the print in kernel mode?
+## Pre-prologue
+No doubt that **HWp** is one of the most famous one. Software engineers can easy understand the simple function of **HWp**. We also admit that **HWp**, such its basic syntax, be the beginning lesson of a C/C++ programmers. But if we want to be a professional one we should dig more the iceberg to see its sunken where there is a lot of consider points in advanced:
+    * Why does it need memory allocation?
+    * The program need a buffer, doesn't it?
+    * What is the mechanism of the memory buffer in printf?
+    * How about the print in kernel mode?
+    * ...
 T.B.C
