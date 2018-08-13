@@ -160,8 +160,9 @@ $ gdb ./printf_app
 ```
 
 OOps, there is a memory allocate call in the sequence! Why?
-It's seems that all for today. The sunken of the icebergs is still a alot of consider points: 
-    * Why does it need memory allocation? 
-    * The program need a buffer, doesn't it? 
+It's seems that all for today. The sunken of the icebergs is still a alot of consider points:
+    * Why does it need memory allocation?
+    * The program need a buffer, doesn't it?
     * What is the mechanism of the memory buffer in printf?
     * How about the print in kernel mode?
+T.B.C
