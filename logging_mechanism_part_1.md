@@ -127,3 +127,6 @@ exit_group(0)                           = ?
 ```
 The results of *nm* or *strace* command look so horrible. But please do not be discouraged. It is really straightforward and I will explain.
 
+Firstly, the following diagram describes a architecture of **Linux** application:
+
+
